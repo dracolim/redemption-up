@@ -11,7 +11,7 @@ export const ChatBubble = ({ isMe, content }: ChatBubbleProps) => {
   return (
     <div className="flex  w-full items-end ">
       {isMe ? null : (
-        <Avatar className="my-2">
+        <Avatar className="my-2 ml-3">
           <AvatarImage src="" />
           <AvatarFallback className="text-gray-800 ">U</AvatarFallback>
         </Avatar>

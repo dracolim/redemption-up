@@ -9,6 +9,7 @@ import asyncio
 
 from motor.motor_asyncio import AsyncIOMotorClient
 from src.dummy_service.entry_points.dummy_routes import dummy_router
+from src.chat_service.entry_points.chat_routes import chat_router
 from src.commons.error_handling.base_error import BaseError
 from src.commons.error_handling.domain_violation_error import (
     DomainViolationError,
@@ -78,6 +79,7 @@ def create_server() -> FastAPI:
 
     # Include routes
     app.include_router(dummy_router)
+    app.include_router(chat_router)
 
     # Register Error handlers
     app.add_exception_handler(BaseError, lambda req, ex: ex.respond())  # type: ignore
