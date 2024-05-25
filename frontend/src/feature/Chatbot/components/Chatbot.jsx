@@ -129,7 +129,7 @@ export default function Chatbot() {
             <DropdownMenuTrigger asChild>
               <div className="absolute left-[15px] p-[4px] bg-white border rounded-xl w-[50px] h-[40px] flex justify-center items-center">
                 <Languages className="text-black " />
-                <ChevronDown className="w-[21px]" />
+                <ChevronDown className="w-[21px] text-black" />
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-16 ml-10">
@@ -169,7 +169,7 @@ export default function Chatbot() {
           </div>
         </div>
 
-        <ScrollArea className="mb-2 h-80 w-full">
+        <ScrollArea className="mb-2 h-80 w-full text-black">
           {chatArray.length == 0 ? (
             <div className="text-[#BAB9B9] mt-[40px]  mx-auto text-center max-w-[284px]">
               <h2 className="font-bold text-[18px] ">{renderHeading()}</h2>

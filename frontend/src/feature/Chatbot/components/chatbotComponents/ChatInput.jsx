@@ -8,22 +8,6 @@ const ChatInput = ({ sendButtonPressed, isNextChatLoading }) => {
     setInput(e.target.value);
   };
 
-  const handleStopRecording = (audioBlob) => {
-    console.log("audioBlob", audioBlob);
-    // const formData = new FormData();
-    // formData.append("audio", audioBlob, "recording.wav");
-    // fetch("http://0.0.0.0:8080/chat/voice-chat", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log("Success:", data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
-  };
   return (
     <div className="relative">
       <div className="px-[15px] pb-[20px]">

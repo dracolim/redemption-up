@@ -4,6 +4,7 @@ import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import ChatSources from "./ChatSources";
 import React from "react";
+import BlueRobot from "@/components/icons/BlueRobot";
 interface ChatBubbleProps {
   isMe: boolean;
   content: string;
@@ -15,7 +16,9 @@ export const ChatBubble = ({ isMe, content }: ChatBubbleProps) => {
       {isMe ? null : (
         <Avatar className="my-2 ml-3">
           <AvatarImage src="" />
-          <AvatarFallback className="text-gray-800 ">U</AvatarFallback>
+          <AvatarFallback className="text-gray-800 ">
+            <BlueRobot />
+          </AvatarFallback>
         </Avatar>
       )}
 
