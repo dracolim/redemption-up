@@ -1,11 +1,28 @@
 import React, { useState } from "react";
 import SearchIcon from "@/components/icons/SearchIcon";
 import { Mic } from "lucide-react";
-
-const ChatInput = ({ sendButtonPressed }) => {
+import AudioRecorder from "./AudioRecorder";
+const ChatInput = ({ sendButtonPressed, isNextChatLoading }) => {
   const [input, setInput] = useState("");
   const handleInputChange = (e) => {
     setInput(e.target.value);
+  };
+
+  const handleStopRecording = (audioBlob) => {
+    console.log("audioBlob", audioBlob);
+    // const formData = new FormData();
+    // formData.append("audio", audioBlob, "recording.wav");
+    // fetch("http://0.0.0.0:8080/chat/voice-chat", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log("Success:", data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
   };
   return (
     <div className="relative">
@@ -18,29 +35,21 @@ const ChatInput = ({ sendButtonPressed }) => {
             placeholder="Ask me anything..."
             className="resize-none px-4 max-h-[40vh] grow border-none rounded-xl focus:outline-none border-transparent focus:ring-0 overflow-x-hidden"
           />
+          <AudioRecorder onStopRecording={sendButtonPressed}></AudioRecorder>
           <button
             size="icon"
             variant="secondary"
-            // disabled={isTransactionLoading}
-            // onClick={() => sendButtonPressed(input)}
-          >
-            <div className="p-2">
-              <Mic className="h-5 w-5" />
-            </div>
-          </button>
-
-          <button
-            size="icon"
-            variant="secondary"
-            // disabled={isTransactionLoading}
+            disabled={isNextChatLoading}
             onClick={() => {
               sendButtonPressed(input);
               setInput("");
-            
             }}
           >
             <div className="pr-2 flex">
-              <SearchIcon className="mt-[2px] h-5 w-5" />
+              <SearchIcon
+                className="mt-[2px] h-5 w-5 "
+                colour={isNextChatLoading ? "#808080" : "#171924"}
+              />
             </div>
           </button>
         </div>

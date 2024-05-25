@@ -46,6 +46,57 @@ export default function Chatbot() {
     setIsNextChatLoading(true);
   };
 
+  const renderHeading = () => {
+    switch (language) {
+      case 'chinese':
+        return '您的聊天机器人助手';
+      case 'melayu':
+        return 'Pembantu chatbot anda';
+      case 'tamil':
+        return 'உங்கள் சாட்போட் உதவியாளர்';
+      default: // English
+        return 'Your chatbot assistant';
+    }
+  };
+
+  const renderParagraph = () => {
+    switch (language) {
+      case 'chinese':
+        return '您可以询问任何问题，从建议的退休计划到如何提高收入。';
+      case 'melayu':
+        return 'Anda boleh bertanya apa-apa sahaja daripada rancangan persaraan yang disyorkan hingga cara meningkatkan pendapatan anda.';
+      case 'tamil':
+        return 'பரிந்துரைக்கப்பட்ட ஓய்வூதியத் திட்டங்கள் முதல் உங்கள் வருமானத்தை அதிகரிப்பது வரை நீங்கள் ஏதேனும் கேட்கலாம்.';
+      default: // English
+        return 'You can ask anything ranging from suggested retirement plans to how you can boost your income.';
+    }
+  };
+
+  const renderOptions = () => {
+    switch (language) {
+      case 'chinese':
+        return [
+          '哪些课程可以提高我的金融知识？',
+          '债券安全吗？',
+        ];
+      case 'melayu':
+        return [
+          'Kursus apa yang boleh meningkatkan literasi kewangan saya?',
+          'Adakah bon selamat?',
+        ];
+      case 'tamil':
+        return [
+          'எந்த பாடங்கள் என் நிதி அறிவை மேம்படுத்தலாம்?',
+          'பாண்டுகள் பாதுகாப்பானவையா?',
+        ];
+      default: // English
+        return [
+          'What courses can improve my financial literacy?',
+          'Are bonds safe?',
+        ];
+    }
+  };
+
   useEffect(() => {
     setTimeout(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -104,8 +155,8 @@ export default function Chatbot() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <h2 className="text-white text-bold text-[18px]">
-            Your chatbot assistant
+          <h2 className="text-white text-bold text-[18px] max-w-[230px] text-center" >
+            {renderHeading()}
           </h2>
           <div className="absolute right-8 top-8">
             <button
@@ -120,17 +171,13 @@ export default function Chatbot() {
 
         <ScrollArea className="mb-2 h-80 w-full">
           {chatArray.length == 0 ? (
-            <div className="text-[#BAB9B9] mt-[70px]  mx-auto text-center max-w-[284px]">
-              <h2 className="font-bold text-[18px] ">Your chatbot assistant</h2>
+            <div className="text-[#BAB9B9] mt-[40px]  mx-auto text-center max-w-[284px]">
+              <h2 className="font-bold text-[18px] ">{renderHeading()}</h2>
               <p className="text-[15px] mt-3">
-                You can ask anything ranging from suggested retirement plans to
-                how you can boost your income.
+                {renderParagraph()}
               </p>
               <ChatOptions
-                options={[
-                  "option 1 is the best becauese",
-                  "option 2 is the best alla",
-                ]}
+                options={renderOptions()}
                 sendButtonPressed={sendButtonPressed}
               />
             </div>
@@ -160,7 +207,7 @@ export default function Chatbot() {
             </div>
           )}
         </ScrollArea>
-        <ChatInput sendButtonPressed={sendButtonPressed} />
+        <ChatInput isNextChatLoading={isNextChatLoading} sendButtonPressed={sendButtonPressed} />
       </AlertDialogContent>
     </AlertDialog>
   );

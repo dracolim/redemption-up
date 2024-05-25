@@ -34,8 +34,6 @@ def create_server() -> FastAPI:
     Create a FastAPI server
     """
     app = FastAPI()
-    app.mongodb_client = _mongo_client  # type: ignore
-    app.mongodb = app.mongodb_client.jouvire  # type: ignore
     # Cors Middleware
     app.add_middleware(
         CORSMiddleware,
@@ -44,24 +42,6 @@ def create_server() -> FastAPI:
         allow_methods=["*"],  # Allows all methods
         allow_headers=["*"],  # Allows all headers
     )
-    
-    # Function to check MongoDB connection
-    async def check_mongodb_status(timeout):
-        try:
-            await asyncio.wait_for(app.mongodb.command("serverStatus"), timeout=timeout)
-            print("MongoDB Connection successful, the database url is: ", os.environ.get("DATABASE_URL"))
-        except asyncio.TimeoutError:
-            print(f"Checking MongoDB connection timed out after {timeout} seconds.")
-            raise ConnectionError("Failed to connect to MongoDB, terminating Application, is your docker running?")
-        except Exception as e:
-            print("Failed to connect to MongoDB, terminating Application")
-            raise ConnectionError(e)
-            
-    @app.on_event("startup")
-    async def startup_event():
-        # Check MongoDB connection at startup
-        print("Checking MongoDB connection, please wait...")
-        await check_mongodb_status(timeout=5)
 
 
     @app.get("/")

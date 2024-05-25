@@ -46,11 +46,23 @@ def embed_text(text: str):
     model = "text-embedding-ada-002"
     return client.embeddings.create(input=[text], model=model).data[0].embedding
 
+def transcribe_audio(audio_file):
+    client = OpenAI(
+        api_key=openai_key,
+    )
+    transcription = client.audio.transcriptions.create(
+        model="whisper-1", 
+        file=audio_file
+    )
+    return transcription.text
+
 
 def generate_answer(language:str, question: str, metadata_results: List[dict]):
     prompt = f"""
-     Keep the answer and below 40 words. Answer the question and mention the important information in {language} based on the given context only."
-    You are an AI assistant. Given the following metadata results, please generate a perfectly formatted markdown answer to the query: '{question}'. Include the content with URLs as markdown links.\n\n"""
+    You are an AI Assitant and you are communicating with elderly
+    Keep the answer concise and below 40 words. Answer the question and mention the important information in {language} based on the given context only."
+    You are an AI assistant. Given the following metadata results, please generate a perfectly formatted markdown answer to the query: '{question}'. Include the content with URLs as markdown links.
+    """
     list_of_dicts = ast.literal_eval(metadata_results)
     for metadata in list_of_dicts:
         metadata = metadata["metadata"]
