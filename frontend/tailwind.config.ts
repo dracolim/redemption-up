@@ -19,8 +19,13 @@ const config = {
     },
     extend: {
       colors: {
+        "global-primary-black": "#171924",
+        "global-primary-gray": "#E0E0E0",
         "navbarbg": "#292939",
         "navbarbtn-gray": "#949191",
+        "cardbg": "#292939",
+        "website-red": "#EA193F",
+        "ontrack-green": "#15D283",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
