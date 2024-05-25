@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import ChatHeader from "./chatbotComponents/ChatHeader";
-import SearchIcon from "@/components/icons/SearchIcon";
 import { ChatBubble } from "./chatbotComponents/ChatBubble";
 import ChatOptions from "./chatbotComponents/ChatOptions";
 import { v4 as uuidv4 } from "uuid";
@@ -32,7 +31,7 @@ import { useLazyGetChatQuery } from "@/services/chatAPI";
 import ChatInput from "./chatbotComponents/ChatInput";
 
 export default function Chatbot() {
-  const [position, setPosition] = React.useState("bottom");
+  const [language, setLanguage] = React.useState("english");
   const [open, setOpen] = useState(false);
   const [trigger, { data: chatData, isError }] = useLazyGetChatQuery();
   const [isNextChatLoading, setIsNextChatLoading] = useState(false);
@@ -43,7 +42,7 @@ export default function Chatbot() {
     setChatArray((prevChatArray) => {
       return [...prevChatArray, { isMe: true, content: text }];
     });
-    trigger(text);
+    trigger({query: text, language: language});
     setIsNextChatLoading(true);
   };
 
@@ -86,19 +85,19 @@ export default function Chatbot() {
               <DropdownMenuLabel>Language</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuRadioGroup
-                value={position}
-                onValueChange={setPosition}
+                value={language}
+                onValueChange={setLanguage}
               >
-                <DropdownMenuRadioItem className="text-left" value="en">
+                <DropdownMenuRadioItem className="text-left" value="english">
                   English
                 </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="ms">
+                <DropdownMenuRadioItem value="melayu">
                   Bahasa Melayu
                 </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="ta">
+                <DropdownMenuRadioItem value="tamil">
                   தமிழ் (Tamil)
                 </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="zh">
+                <DropdownMenuRadioItem value="chinese">
                   中文 (Chinese)
                 </DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>

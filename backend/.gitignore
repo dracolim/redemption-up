@@ -12,3 +12,5 @@ tests/data/
 
 # Keep mongodb data out of version control
 data/
+
+initialize_vectors.py

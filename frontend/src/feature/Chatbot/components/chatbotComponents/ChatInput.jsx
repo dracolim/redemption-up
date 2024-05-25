@@ -33,7 +33,11 @@ const ChatInput = ({ sendButtonPressed }) => {
             size="icon"
             variant="secondary"
             // disabled={isTransactionLoading}
-            onClick={() => sendButtonPressed(input)}
+            onClick={() => {
+              sendButtonPressed(input);
+              setInput("");
+            
+            }}
           >
             <div className="pr-2 flex">
               <SearchIcon className="mt-[2px] h-5 w-5" />
