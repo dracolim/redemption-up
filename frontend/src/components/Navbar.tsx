@@ -17,39 +17,39 @@ const Navbar = () => {
     const isActive = (pathname: string) => pathName === pathname;
 
     return (
-        <div className="fixed bottom-0 w-full bg-navbarbg">
+        <div className="sticky bottom-0 w-full bg-navbarbg rounded-t-2xl">
             <div className="flex justify-around p-2 items-center">
                 <Link href="/">
                     <div className={
-                        `${isActive("/") ? "bg-red-500 text-white rounded-lg" : "text-navbarbtn-gray"} py-3 px-5`
+                        `${isActive("/") ? "bg-website-red text-white rounded-lg" : "text-navbarbtn-gray"} py-3 px-5`
                     }>
                         <TbHomeFilled size={30} />
                     </div>
                 </Link>
                 <Link href="/learn">
                     <div className={
-                        `${isActive("/learn") ? "bg-red-500 text-white rounded-lg" : "text-navbarbtn-gray"} py-3 px-5`
+                        `${isActive("/learn") ? "bg-website-red text-white rounded-lg" : "text-navbarbtn-gray"} py-3 px-5`
                     }>
                         <IoSchool size={30} />
                     </div>
                 </Link>
                 <Link href="/shorts">
                     <div className={
-                        `${isActive("/shorts") ? "bg-red-500 text-white rounded-lg" : "text-navbarbtn-gray"} py-3 px-5`
+                        `${isActive("/shorts") ? "bg-website-red text-white rounded-lg" : "text-navbarbtn-gray"} py-3 px-5`
                     }>
                         <SiYoutubeshorts size={30} />
                     </div>
                 </Link>
                 <Link href="/finance">
                     <div className={
-                        `${isActive("/finance") ? "bg-red-500 text-white rounded-lg" : "text-navbarbtn-gray"} py-3 px-5`
+                        `${isActive("/finance") ? "bg-website-red text-white rounded-lg" : "text-navbarbtn-gray"} py-3 px-5`
                     }>
                         <TbCoinFilled size={30} />
                     </div>
                 </Link>
                 <Link href="/settings">
                     <div className={
-                        `${isActive("/settings") ? "bg-red-500 text-white rounded-lg" : "text-navbarbtn-gray"} py-3 px-5`
+                        `${isActive("/settings") ? "bg-website-red text-white rounded-lg" : "text-navbarbtn-gray"} py-3 px-5`
                     }>
                         <IoIosSettings size={30} />
                     </div>
