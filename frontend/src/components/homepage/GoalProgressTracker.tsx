@@ -9,7 +9,7 @@ interface GoalProgressTrackerProps {
     <div className='p-2 my-4 mx-5 rounded-2xl bg-website-red'>
         <div className='p-4 m-2 rounded-2xl bg-white text-black'>
             <div className='flex text-xs justify-between items-start'>
-                <div className='col-span-1'><Image src="/images/TargetBoard.png" alt="targetboard" width={45} height={45}/></div>
+                <div className='col-span-1'><Image src="/images/targetboard.svg" alt="targetboard" width={45} height={45}/></div>
                 
                 <div className='flex flex-col w-5/6'>
                     <div>Your Retirement Goal Progress</div>

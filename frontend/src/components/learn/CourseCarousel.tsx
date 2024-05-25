@@ -13,7 +13,7 @@ import sampleSuggestedCourses from "../../data/sampleSuggestedCourses.json"
 import React from 'react'
 import Image from "next/image";
 
-const ScrollTabs = () => {
+const CourseCarousel = () => {
     return (
         <div className="px-5 py-2 w-full">
             <div className="mb-2">Courses to take to up skill your current job</div>
@@ -68,4 +68,4 @@ const ScrollTabs = () => {
 }
 
 
-export default ScrollTabs
+export default CourseCarousel

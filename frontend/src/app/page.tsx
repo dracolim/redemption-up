@@ -7,7 +7,6 @@ import { IoMdInformationCircleOutline } from "react-icons/io";
 import { useEffect, useState } from "react";
 import GoalProgressTracker from "@/components/homepage/GoalProgressTracker";
 import RecommendSection from "@/components/homepage/RecommendSection";
-import ScrollTabs from "@/components/homepage/ScrollTabs";
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 

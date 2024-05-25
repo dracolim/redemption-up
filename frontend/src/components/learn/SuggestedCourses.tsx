@@ -1,5 +1,5 @@
 import React from 'react'
-import ScrollTabs from './ScrollTabs'
+import CourseCarousel from './CourseCarousel'
 
 const SuggestedCourses = () => {
   return (
@@ -9,7 +9,7 @@ const SuggestedCourses = () => {
             <div className="flex-grow border-b border-gray-700"></div>
         </div>
         <div className='flex justify-center items-center flex-col'>
-            <ScrollTabs/>
+            <CourseCarousel/>
         </div>
     </div>
   )
