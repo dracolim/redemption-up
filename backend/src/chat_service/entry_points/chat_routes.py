@@ -1,38 +1,75 @@
 """
 Routes for the /chat end point
 """
+
 import os
-from fastapi import APIRouter, Request
-from marshmallow import ValidationError
-import pinecone
-from ...commons.error_handling.http_error import HttpError
-from ...commons.error_handling.repository_error import RepositoryError
-from ...commons.utils.mongo_utils import is_valid_object_id
+from fastapi import FastAPI, Request, File, HTTPException, APIRouter, UploadFile
+from fastapi.responses import JSONResponse
+import asyncio
+import json
+import shutil
+
 from ..domain import (
     chat_repository as chat_domain,
 )
-from .models import Answer, QueryResult, Document
-
 
 chat_router = APIRouter(
     prefix="/chat",
 )
 
-pinecone.init(api_key=os.getenv("PINECONE_API_KEY"))
-index_name = "your-index-name"
-pinecone_index = pinecone.Index(index_name)
+# Define directories
+UPLOAD_DIRECTORY = "uploads"
+os.makedirs(UPLOAD_DIRECTORY, exist_ok=True)
+
+@chat_router.get("/raw-results")
+async def get_raw_result(query: str = ...):
+    threshold = 0.65
+    res = chat_domain.query_pinecone(query)["matches"]
+    fields_to_include = ["metadata"]
+    parsed = [
+        {field: d[field] for field in fields_to_include}
+        for d in res
+        if d["score"] > threshold
+    ]
+    if len(parsed) == 0:
+        return {"isMe": False, "content": "Sorry, I am unable to answer that query"}
+    return {"isMe": False, "content": parsed}
 
 
-@chat_router.get("/" , response_model=Answer)
-async def ask_question(question: str):
-    embedding = chat_domain.embed_text(question)
-    query_response = pinecone_index.query(embedding, top_k=5, include_metadata=True)
 
-    if not query_response["matches"]:
-        return Answer(content="Sorry, I don't have an answer to that question.", sources=[])
+# @chat_router.post("/voice-chat")
+# async def upload_audio(file: UploadFile = File(...)):
+#     try:
+#         file_location = os.path.join(UPLOAD_DIRECTORY, file.filename)
+#         with open(file_location, "wb") as buffer:
+#             shutil.copyfileobj(file.file, buffer)
 
-    context = "\n\n".join([match["metadata"]["content"] for match in query_response["matches"]])
-    answer_content = chat_domain.generate_answer(question, context)
-    sources = [QueryResult(content=match["metadata"]["content"], link=match["metadata"]["link"]) for match in query_response["matches"]]
+#         # Transcribe audio using Whisper
+#         with open(file_location, "rb") as audio_file:
+#             transcription_text = chat_domain.transcribe_audio(audio_file)
+        
+#         # Clean up the audio file
+#         os.remove(file_location)
+#         print(transcription_text)
 
-    return Answer(content=answer_content, sources=sources)
+#         return {"transcription": transcription_text}
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=str(e)) from e
+    
+@chat_router.get("/chat")
+async def get_demo_chat(language: str = ..., query: str = ...):
+    threshold = 0.72
+    res = chat_domain.query_pinecone(query)["matches"]
+    fields_to_include = ["metadata"]
+    parsed = [
+        {field: d[field] for field in fields_to_include}
+        for d in res
+        if d["score"] > threshold
+    ]
+    if len(parsed) == 0:
+        return {"isMe": False, "content": "Sorry, I am unable to answer that query"}
+    answer = chat_domain.generate_answer(language, query, json.dumps(parsed))
+    print(json.dumps(answer.text))
+    cleaned_response = answer.text.replace('\n', '')
+
+    return {"isMe": False, "content": cleaned_response}

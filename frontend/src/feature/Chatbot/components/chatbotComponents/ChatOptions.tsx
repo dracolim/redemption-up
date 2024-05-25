@@ -15,10 +15,15 @@ const ChatOptions = ({ options, sendButtonPressed }: Props) => {
     >
       {options.map((option) => (
         <button
+          style={{
+            wordBreak: "break-word",
+            overflowWrap: "break-word",
+            whiteSpace: "pre-wrap",
+          }}
           type="button"
           key={uuidv4()}
           onClick={() => sendButtonPressed(option)}
-          className={`w-[160px] basis-1/${length} text-center rounded-xl leading-1.5 p-4 my-2 border-gray-300  hover:opacity-80 bg-white border-[1px] dark:bg-gray-700`}
+          className={`w-[150px] basis-1/${length} text-center rounded-xl leading-1.5 p-4 my-2 border-gray-300  hover:opacity-80 bg-white border-[1px] dark:bg-gray-700`}
         >
           {option}
         </button>

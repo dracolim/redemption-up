@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Mic, X, Languages, ChevronDown } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
+import BeatLoader from "react-spinners/BeatLoader";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -23,96 +23,103 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import ChatHeader from "./chatbotComponents/ChatHeader";
-import SearchIcon from "@/components/icons/SearchIcon";
 import { ChatBubble } from "./chatbotComponents/ChatBubble";
 import ChatOptions from "./chatbotComponents/ChatOptions";
-import { Button } from "@/components/ui/button";
+import { v4 as uuidv4 } from "uuid";
 
 import { useLazyGetChatQuery } from "@/services/chatAPI";
+import ChatInput from "./chatbotComponents/ChatInput";
 
 export default function Chatbot() {
-  const [position, setPosition] = React.useState("bottom");
-  const ref = useRef(null);
+  const [language, setLanguage] = React.useState("english");
   const [open, setOpen] = useState(false);
   const [trigger, { data: chatData, isError }] = useLazyGetChatQuery();
   const [isNextChatLoading, setIsNextChatLoading] = useState(false);
-
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    isTransactionLoading,
-  } = useChat({
-    initialMessages: [
-      {
-        id: 1,
-        role: "system",
-        content:
-          "You are a customer service chatbot for the website NFTicket, your answers should be short (30 words) and simple to understand.",
-      },
-      {
-        id: 2,
-        role: "system",
-        content: `Introduction: 
-
-                NFTicket uses NFTs to combat ticketing scams and scalping. NFTs provide security and traceability, ensuring authenticity and preventing fraud. Tickets are sold directly by organizers or on a marketplace. Smart contracts ensure secure transactions, and organizers earn from secondary sales. Scalping is reduced by limiting NFTs per wallet.	
-                
-                Target Audience: 
-                Event goers (concerts, sports matches, conferences, conventions)
-                
-                Features:
-                
-                NFT Smart Contract
-                - Deploys event contracts, manages minting, transfers ownership, and enables ticket redemption.
-                - Allows trade on marketplace; tickets marked redeemed can't be reused.
-                - Offers revenue potential for organizers from secondary transactions.
-                
-                Decentralized Marketplace:
-                - Handles secondhand ticket trading with secure transactions.
-                - Sellers authorize NFT transfer upon payment; commission benefits organizers.
-                - Supports direct sale or auction; ensures ownership transfer on payment.
-                
-                Ticket Insurance:
-                - Optional insurance covers cancellations; refunds portion of ticket price.
-                - NFT smart contract triggers event cancellation and manages refunds.
-                
-                VR Concert Experience:
-                - Offers virtual attendance; utilizes 360° livestreaming.
-                - Provides VR-compatible experience for remote users.
-                
-                Pages:
-                
-                Initial Tickets Page:Facilitates first-hand ticket purchases; displays available events.
-                Marketplace Page:Allows listing and purchase of ticket NFTs; shows transaction history.
-                Your NFTickets Page: Displays user's owned tickets for convenience.
-                
-                Components: 
-                Connect to wallet button: 
-                - Located at the top right corner of website (right side on navigation bar at the top)
-                - User can still navigate the website without connecting a wallet but is unable to make a purchase
-                `,
-      },
-    ],
-  });
+  const messagesEndRef = useRef(null);
   const [chatArray, setChatArray] = useState([]);
-
-  useEffect(() => {
-    trigger("demo");
+  const sendButtonPressed = (text) => {
+    if (!text) return;
+    setChatArray((prevChatArray) => {
+      return [...prevChatArray, { isMe: true, content: text }];
+    });
+    trigger({query: text, language: language});
     setIsNextChatLoading(true);
-  }, []);
+  };
 
-  const optionButtonPressed = (option) => {
-    console.log("pressed");
+  const renderHeading = () => {
+    switch (language) {
+      case 'chinese':
+        return '您的聊天机器人助手';
+      case 'melayu':
+        return 'Pembantu chatbot anda';
+      case 'tamil':
+        return 'உங்கள் சாட்போட் உதவியாளர்';
+      default: // English
+        return 'Your chatbot assistant';
+    }
+  };
+
+  const renderParagraph = () => {
+    switch (language) {
+      case 'chinese':
+        return '您可以询问任何问题，从建议的退休计划到如何提高收入。';
+      case 'melayu':
+        return 'Anda boleh bertanya apa-apa sahaja daripada rancangan persaraan yang disyorkan hingga cara meningkatkan pendapatan anda.';
+      case 'tamil':
+        return 'பரிந்துரைக்கப்பட்ட ஓய்வூதியத் திட்டங்கள் முதல் உங்கள் வருமானத்தை அதிகரிப்பது வரை நீங்கள் ஏதேனும் கேட்கலாம்.';
+      default: // English
+        return 'You can ask anything ranging from suggested retirement plans to how you can boost your income.';
+    }
+  };
+
+  const renderOptions = () => {
+    switch (language) {
+      case 'chinese':
+        return [
+          '哪些课程可以提高我的金融知识？',
+          '债券安全吗？',
+        ];
+      case 'melayu':
+        return [
+          'Kursus apa yang boleh meningkatkan literasi kewangan saya?',
+          'Adakah bon selamat?',
+        ];
+      case 'tamil':
+        return [
+          'எந்த பாடங்கள் என் நிதி அறிவை மேம்படுத்தலாம்?',
+          'பாண்டுகள் பாதுகாப்பானவையா?',
+        ];
+      default: // English
+        return [
+          'What courses can improve my financial literacy?',
+          'Are bonds safe?',
+        ];
+    }
   };
 
   useEffect(() => {
-    if (ref.current === null) return;
-    ref.current.scrollTo(0, ref.current.scrollHeight);
-  }, [messages]);
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100); // Adjust delay as needed
+  }, [chatArray]);
+
+  useEffect(() => {
+    // dont update chat array if no content
+    if (!chatData?.content) return;
+    setIsNextChatLoading(false);
+    setChatArray((prevChatArray) => {
+      return [
+        ...prevChatArray,
+        {
+          isMe: chatData.isMe,
+          content: chatData.content,
+        },
+      ];
+    });
+  }, [chatData]);
 
   return (
-    <AlertDialog className="" open={open} onOpenChange={setOpen}>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger>
         <ChatHeader />
       </AlertDialogTrigger>
@@ -122,34 +129,34 @@ export default function Chatbot() {
             <DropdownMenuTrigger asChild>
               <div className="absolute left-[15px] p-[4px] bg-white border rounded-xl w-[50px] h-[40px] flex justify-center items-center">
                 <Languages className="text-black " />
-                <ChevronDown className="w-[21px]" />
+                <ChevronDown className="w-[21px] text-black" />
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-16 ml-10">
               <DropdownMenuLabel>Language</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuRadioGroup
-                value={position}
-                onValueChange={setPosition}
+                value={language}
+                onValueChange={setLanguage}
               >
-                <DropdownMenuRadioItem className="text-left" value="en">
+                <DropdownMenuRadioItem className="text-left" value="english">
                   English
                 </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="ms">
+                <DropdownMenuRadioItem value="melayu">
                   Bahasa Melayu
                 </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="ta">
+                <DropdownMenuRadioItem value="tamil">
                   தமிழ் (Tamil)
                 </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="zh">
+                <DropdownMenuRadioItem value="chinese">
                   中文 (Chinese)
                 </DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <h2 className="text-white text-bold text-[18px]">
-            Your chatbot assistant
+          <h2 className="text-white text-bold text-[18px] max-w-[230px] text-center" >
+            {renderHeading()}
           </h2>
           <div className="absolute right-8 top-8">
             <button
@@ -162,55 +169,45 @@ export default function Chatbot() {
           </div>
         </div>
 
-        <ScrollArea className="mb-2 h-80 w-full " ref={ref}>
+        <ScrollArea className="mb-2 h-80 w-full text-black">
           {chatArray.length == 0 ? (
-            <div className="text-[#BAB9B9] mt-[70px]  mx-auto text-center max-w-[284px]">
-              <h2 className="font-bold text-[18px] ">Your chatbot assistant</h2>
+            <div className="text-[#BAB9B9] mt-[40px]  mx-auto text-center max-w-[284px]">
+              <h2 className="font-bold text-[18px] ">{renderHeading()}</h2>
               <p className="text-[15px] mt-3">
-                You can ask anything ranging from suggested retirement plans to
-                how you can boost your income.
+                {renderParagraph()}
               </p>
               <ChatOptions
-                options={[
-                  "option 1 is the best becauese",
-                  "option 2 is the best alla",
-                ]}
-                sendButtonPressed={optionButtonPressed}
+                options={renderOptions()}
+                sendButtonPressed={sendButtonPressed}
               />
             </div>
           ) : (
-            <div className="whitespace-pre-wrap">
-              <ChatBubble content="test" isMe className="mr-4" />
-              <ChatBubble content="test 2 " isMe={false} className="ml-4" />
+            <div>
+              {chatArray.map((chat) => {
+                return (
+                  <div
+                    className={
+                      !chat.isMe ? "transition animate-fade-in-down" : ""
+                    }
+                    key={uuidv4()}
+                  >
+                    <ChatBubble isMe={chat.isMe} content={chat.content} />
+                  </div>
+                );
+              })}
+              {isNextChatLoading && (
+                <BeatLoader
+                  className="ml-3"
+                  size={10}
+                  color="#171924"
+                  speedMultiplier={0.5}
+                />
+              )}
+              <div ref={messagesEndRef} />
             </div>
           )}
         </ScrollArea>
-
-        <form onSubmit={handleSubmit} className="relative">
-          <div className="px-[15px] pb-[20px]">
-            <div className=" w-[100%] drop-shadow-lg h-fit flex items-center border-gray-300 border-[1px] rounded-xl bg-white">
-              <input
-                name="message"
-                value={input}
-                onChange={handleInputChange}
-                placeholder="Ask me anything..."
-                className="resize-none px-4 max-h-[40vh] grow border-none rounded-xl focus:outline-none border-transparent focus:ring-0 overflow-x-hidden"
-              />
-              <button
-                size="icon"
-                type="submit"
-                variant="secondary"
-                disabled={isTransactionLoading}
-                // className="absolute right-1 top-1 h-8 w-10 bg-black hover:bg-gray-500"
-              >
-                <div className="p-2 flex">
-                  <Mic />
-                  <SearchIcon className="ml-2 mt-[2px] h-5 w-5" />
-                </div>
-              </button>
-            </div>
-          </div>
-        </form>
+        <ChatInput isNextChatLoading={isNextChatLoading} sendButtonPressed={sendButtonPressed} />
       </AlertDialogContent>
     </AlertDialog>
   );
