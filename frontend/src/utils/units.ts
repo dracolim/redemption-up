@@ -11,6 +11,7 @@ export type Tile =
     | {
         type: "star" | "dumbbell" | "book" | "trophy" | "fast-forward";
         description: string;
+        subDescription?: string;
         videoSrc?: string;
         showTab?: boolean;
     };
@@ -28,15 +29,15 @@ export const units: readonly Unit[] = [
             {
                 type: "star",
                 description: "Learn more about Tech support specialist",
-                videoSrc: 'https://www.youtube.com/embed/1X7fZoDs9KU'
+                subDescription: "In this roadmap you will learn about the Tech support specialist role, the skills required, and the career opportunities.",
             },
             {
                 type: "book",
-                description: "Greet people",
-                videoSrc: 'https://www.youtube.com/embed/1X7fZoDs9KU'
+                description: "Day in the life of a tech support specialist",
+                videoSrc: 'https://www.youtube.com/embed/KgaJZxaJ7NI?si=Ga3qWrXsEWKu'
             },
-            { type: "book", description: "A date" ,videoSrc: 'https://www.youtube.com/embed/1X7fZoDs9KU' },
-            { type: "trophy", description: "Let's explore some courses", videoSrc: 'https://www.youtube.com/embed/1X7fZoDs9KU', showTab: true },
+            { type: "book", description: "What are some skills required for this role?" ,videoSrc: 'https://www.youtube.com/embed/uGACkBKjPMQ?si=0MCeExNnVVd5ZMQM' },
+            { type: "trophy", description: "What to expect in the future", subDescription: "New trends in technology are creating new possibilities for automation and artificial intelligence.Overall employment of computer support specialists is projected to grow 5 percent from 2022 to 2032, faster than the average for all occupations.Expected growth in numbers in the future!", showTab: true },
         ],
     }
     // {

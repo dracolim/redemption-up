@@ -187,6 +187,7 @@ const TileTooltip = ({
     description,
     status,
     closeTooltip,
+    subDescription,
 }: {
     selectedTile: number | null;
     index: number;
@@ -194,6 +195,7 @@ const TileTooltip = ({
     tilesLength: number;
     description: string;
     status: TileStatus;
+    subDescription?: string;
     closeTooltip: () => void;
 }) => {
     const tileTooltipRef = useRef<HTMLDivElement | null>(null);
@@ -228,7 +230,7 @@ const TileTooltip = ({
         >
             <div
                 className={[
-                    "absolute z-30 flex w-[300px] flex-col gap-4 rounded-xl p-4 font-bold transition-all duration-300",
+                    "absolute z-30 flex w-[320px] flex-col gap-4 rounded-xl p-4 font-bold transition-all duration-300",
                     status === "ACTIVE"
                         ? activeBackgroundColor
                         : status === "LOCKED"
@@ -263,14 +265,28 @@ const TileTooltip = ({
                 >
                     {description}
                 </div>
+                {subDescription && ( <div
+                    className={[
+                        "text-sm font-normal",
+                        status === "ACTIVE"
+                            ? "text-white"
+                            : status === "LOCKED"
+                                ? "text-gray-400"
+                                : "text-yellow-600",
+                    ].join(" ")}
+                >
+                    {subDescription}
+                </div>)}
                 {status === "ACTIVE" ? (
                     <div>
-                        <iframe
-                            className='items-center justify-center w-full h-40'
-                            src={unit?.tiles[index].videoSrc ?? ""}
-                            allow='autoplay; encrypted-media'
-                            title='video'
-                        />
+                        {unit?.tiles[index].videoSrc && (
+                            <iframe
+                                className='items-center justify-center w-full h-40'
+                                src={unit?.tiles[index].videoSrc ?? ""}
+                                allow='autoplay; encrypted-media'
+                                title='video'
+                            />
+                        )}
                             { unit?.tiles[index].type === "trophy" ? (
                                 <button
                                     className="w-full rounded-xl bg-white p-3 uppercase text-black mt-3" 
@@ -280,7 +296,6 @@ const TileTooltip = ({
                                             updateState();
                                         };
                                     }}
-                                    // disabled
                                 >
                                     Complete
                                 </button>
@@ -291,7 +306,6 @@ const TileTooltip = ({
                                     increaseLessonsCompleted(1);
                                 }
                             }}
-                            // disabled
                         >
                             Next
                         </button>)}
@@ -305,12 +319,16 @@ const TileTooltip = ({
                     </button>
                 ) : ( 
                     // COMPLETED
-                    <iframe
+                    <div>
+                        {unit?.tiles[index].videoSrc && (
+                            <iframe
                             className='items-center justify-center w-full h-40'
                             src={unit?.tiles[index].videoSrc ?? ""}
                             allow='autoplay; encrypted-media'
                             title='video'
-                    />
+                        />
+                        )}                
+                    </div>
                 )}
             </div>
         </div>
@@ -350,9 +368,6 @@ const UnitSection = ({ unit }: { unit: Unit }): JSX.Element => {
                                             return (
                                                 <div className="relative">
                                                     <TileIcon tileType={tile.type} status={status} />
-                                                    <div className="absolute left-0 right-0 top-6 flex justify-center text-lg font-bold text-yellow-700">
-                                                        {unit.unitNumber}
-                                                    </div>
                                                 </div>
                                             );
                                         }
@@ -424,9 +439,10 @@ const UnitSection = ({ unit }: { unit: Unit }): JSX.Element => {
                                                 ? "Jump here?"
                                                 : tile.description;
                                         case "trophy":
-                                            return `Unit ${unit.unitNumber} review`;
+                                            return tile.description;
                                     }
                                 })()}
+                                subDescription={tile.subDescription}
                                 status={status}
                                 closeTooltip={closeTooltip}
                             />
@@ -462,6 +478,7 @@ const getTopBarColors = (
 const RoadMap: NextPage = () => {
     const [scrollY, setScrollY] = useState(0);
     const [isVisible, setIsVisible] = useState(true);
+    const [isVisibleSuccess, setIsVisibleSuccess] = useState(true);
 
     useEffect(() => {
         const updateScrollY = () => setScrollY(globalThis.scrollY ?? scrollY);
@@ -475,10 +492,10 @@ const RoadMap: NextPage = () => {
     return (
         <>  
             <div className="mx-6">
-                <div className="text-white mt-6 font-bold flex">
+                <Link href="/" className="text-white mt-6 font-bold flex">
                     <ArrowLeftSvg/>
                     <span className='mt-1 ml-2'>Back to Jobs</span>
-                </div>
+                </Link>
             
                 <div className='grid grid-cols-6 gap-1 w-full bg-white rounded-2xl text-global-primary-black p-3 flex items-center mt-4 relative'>
                     <div className="col-span-1">
@@ -492,40 +509,55 @@ const RoadMap: NextPage = () => {
                 </div>
             </div>
             {isVisible && (
-            <div className='mx-6 mt-4'>
-                <div className="flex items-center p-5 text-md rounded-lg bg-gray-800 text-white relative z-20" role="alert">
-                    <HeadsUpSvg/>
-                    <div className='ml-3'>
-                        Heads up! Complete the tasks stated at each checkpoint in order to unlock the next checkpoint.
+                <div className='mx-6 mt-4'>
+                    <div className="flex items-center p-5 text-md rounded-lg bg-gray-800 text-white relative z-20" role="alert">
+                        <HeadsUpSvg/>
+                        <div className='ml-3'>
+                            Heads up! Complete the tasks stated at each checkpoint in order to unlock the next checkpoint.
+                        </div>
+                        <div className='relative bottom-4'>
+                            <button onClick={() => {setIsVisible(false)}}>
+                                <CrossSVG/>
+                            </button>
+                        </div>
                     </div>
-                    <div className='relative bottom-4'>
-                        <button onClick={() => {setIsVisible(false)}}>
-                            <CrossSVG/>
-                        </button>
+                </div> 
+            )}
+            {state && isVisibleSuccess && (
+                <div className='mx-6 mt-4'>
+                    <div className="flex items-center p-5 text-md rounded-lg bg-green-500 text-white relative z-20" role="alert">
+                        <HeadsUpSvg/>
+                        <div className='ml-3'>
+                            Congratulations on finishing the Tech Support Specialist roadmap. You can now access the free resources and certificates available down below.
+                        </div>
+                        <div className='relative bottom-4'>
+                            <button onClick={() => {setIsVisibleSuccess(false)}}>
+                                <CrossSVG/>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </div> 
-        )}
+                </div> 
+            )}
 
         {state ? (
-            <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64 lg:gap-12">
+            <div>
+                <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64 lg:gap-12">
                 <div className="flex max-w-2xl grow flex-col">
                     {units.map((unit) => (
                         <UnitSection unit={unit} key={unit.unitNumber} />
                     ))}
                 </div>
-            </div> ) : (
-                <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64 lg:gap-12 mb-[300px]">
+            </div> 
+            <FinalTab toDisplay={true} /> 
+            </div>
+            ) : (
+                <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64 lg:gap-12 mb-[320px]">
                 <div className="flex max-w-2xl grow flex-col">
                     {units.map((unit) => (
                         <UnitSection unit={unit} key={unit.unitNumber} />
                     ))}
                 </div>
                 </div>
-            )}
-            
-            {state && (
-                <FinalTab toDisplay={true} /> 
             )}
         </>
     );
