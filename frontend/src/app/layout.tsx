@@ -21,9 +21,11 @@ export default function RootLayout({
       <html lang="en">
         <body className={poppins.className}>
           <AppProvider>
-            <div className="main">
-              {children}
-              <div className="fixed bottom-[105px] right-8 z-50">
+            <div className="">
+              <div className="h-full mb-20">
+                {children}
+              </div>
+              <div className="fixed bottom-[90px] right-8 z-50">
                 <Chatbot />
               </div>
               <Navbar />

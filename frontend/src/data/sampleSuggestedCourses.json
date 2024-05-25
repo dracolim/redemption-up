@@ -1,0 +1,17 @@
+[
+    {
+        "title": "ReactJS Course",
+        "difficulty": "Advanced",
+        "url": "https://www.coursera.org/search?query=reactjs"
+    },
+    {
+        "title": "Figma Course",
+        "difficulty": "Beginner",
+        "url": "https://www.coursera.org/search?query=figma"
+    },
+    {
+        "title": "Docker Course",
+        "difficulty": "Intermediate",
+        "url": "https://www.coursera.org/search?query=docker"
+    }
+]
