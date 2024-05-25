@@ -22,7 +22,7 @@ export default function RootLayout({
         <body className={poppins.className}>
           <AppProvider>
             <div className="">
-              <div className="h-full mb-20">
+              <div className="h-full mb-28">
                 {children}
               </div>
               <div className="fixed bottom-[90px] right-8 z-50">

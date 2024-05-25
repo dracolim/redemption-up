@@ -6,12 +6,13 @@ import { Card, CardContent } from "@/components/ui/card"
 import { IoHeartCircle } from "react-icons/io5";
 import { PiArrowCircleDownRightFill } from "react-icons/pi";
 import sampleFinancePlans from "../../data/sampleFinancePlans.json"
+import Link from 'next/link';
 
 const FinanceResults = () => {
   return (
     <div className='px-5 pb-4 z-0'>
             <div className='flex items-center w-full'>
-                <div className='font-semibold text-3xl mr-3'>Suggested Jobs</div>
+                <div className='font-semibold text-3xl mr-3'>Results</div>
                 <div className="flex-grow border-b border-gray-700"></div>
             </div>
             <div className='mt-3'>
@@ -42,15 +43,15 @@ const FinanceResults = () => {
                             </div>
                             <div className='max-h-56'>
                                 <p className='line-clamp-3'>
-                                    {plan.description}
+                                    {plan.brief}
                                 </p>
                             </div>
                             <div className="flex items-center justify-end">
                                 <div className="flex items-center">
                                     <IoHeartCircle size={35}/>
-                                    <a href="">
+                                    <Link href={`/finance/${plan.id}`}>
                                         <PiArrowCircleDownRightFill size={35}/>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </CardContent>
