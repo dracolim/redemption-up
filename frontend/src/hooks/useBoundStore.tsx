@@ -6,6 +6,7 @@ import type { LessonSlice } from "@/stores/createLessonStore"
 import { createLessonSlice } from "@/stores/createLessonStore";
 import type { UserSlice } from "@/stores/createUserStore";
 import { createUserSlice } from "@/stores/createUserStore";
+import { createFinalState } from "@/stores/createFinalStateStore";
 
 type BoundState = GoalXpSlice &
     LessonSlice &
@@ -22,4 +23,5 @@ export const useBoundStore = create<BoundState>((...args: any) => ({
     ...createGoalXpSlice(...args),
     ...createLessonSlice(...args),
     ...createUserSlice(...args),
+    ...createFinalState(...args),
 }));

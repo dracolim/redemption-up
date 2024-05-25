@@ -25,19 +25,22 @@ import {
     ActiveDumbbellSvg,
     PracticeExerciseSvg,
     FlowerVectorSvg,
-    ArrowLeftSvg
+    ArrowLeftSvg,
+    HeadsUpSvg,
+    CrossSVG
 } from "@/components/Svgs";
 import { useBoundStore } from '@/hooks/useBoundStore';
 import { useRouter } from 'next/navigation';
 import type { Tile, TileType, Unit } from "@/utils/units";
 import { units } from '@/utils/units';
-import Image from 'next/image'
-
+import Image from 'next/image';
+import FinalTab from './finalTab';
 
 type TileStatus = "LOCKED" | "ACTIVE" | "COMPLETE";
 
+// LOGIC IS HERE!!!!!
 const tileStatus = (tile: Tile, lessonsCompleted: number): TileStatus => {
-    const lessonsPerTile = 4;
+    const lessonsPerTile = 1;
     const tilesCompleted = Math.floor(lessonsCompleted / lessonsPerTile);
     const tiles = units.flatMap((unit) => unit.tiles);
     const tileIndex = tiles.findIndex((t) => t === tile);
@@ -211,7 +214,9 @@ const TileTooltip = ({
 
     const unit = units.find((unit) => unit.unitNumber === unitNumber);
     const activeBackgroundColor = unit?.backgroundColor ?? "bg-green-500";
-    const activeTextColor = unit?.textColor ?? "text-green-500";
+    const increaseLessonsCompleted = useBoundStore((x: { increaseLessonsCompleted: any; }) => x.increaseLessonsCompleted);
+    const { state, updateState } = useBoundStore();
+
 
     return (
         <div
@@ -259,11 +264,38 @@ const TileTooltip = ({
                     {description}
                 </div>
                 {status === "ACTIVE" ? (
-                    <iframe
-                        src={unit?.tiles[index].videoSrc ?? ""}
-                        allow='autoplay; encrypted-media'
-                        title='video'
-                    />
+                    <div>
+                        <iframe
+                            className='items-center justify-center w-full h-40'
+                            src={unit?.tiles[index].videoSrc ?? ""}
+                            allow='autoplay; encrypted-media'
+                            title='video'
+                        />
+                            { unit?.tiles[index].type === "trophy" ? (
+                                <button
+                                    className="w-full rounded-xl bg-white p-3 uppercase text-black mt-3" 
+                                    onClick={()=>{
+                                        if (status === "ACTIVE") {
+                                            increaseLessonsCompleted(1);
+                                            updateState();
+                                        };
+                                    }}
+                                    // disabled
+                                >
+                                    Complete
+                                </button>
+                        ): (<button
+                            className="w-full rounded-xl bg-white p-3 uppercase text-black mt-3" 
+                            onClick={()=>{
+                                if (status === "ACTIVE") {
+                                    increaseLessonsCompleted(1);
+                                }
+                            }}
+                            // disabled
+                        >
+                            Next
+                        </button>)}
+                    </div>
                 ) : status === "LOCKED" ? (
                     <button
                         className="w-full rounded-xl bg-gray-200 p-3 uppercase text-gray-400"
@@ -273,18 +305,17 @@ const TileTooltip = ({
                     </button>
                 ) : ( 
                     // COMPLETED
-                    <Link
-                        href="/lesson"
-                        className="flex w-full items-center justify-center rounded-xl border-b-4 border-yellow-200 bg-white p-3 uppercase text-yellow-400"
-                    >
-                        Practice +5 XP
-                    </Link>
+                    <iframe
+                            className='items-center justify-center w-full h-40'
+                            src={unit?.tiles[index].videoSrc ?? ""}
+                            allow='autoplay; encrypted-media'
+                            title='video'
+                    />
                 )}
             </div>
         </div>
     );
 };
-
 
 const UnitSection = ({ unit }: { unit: Unit }): JSX.Element => {
     const router = useRouter();
@@ -374,7 +405,7 @@ const UnitSection = ({ unit }: { unit: Unit }): JSX.Element => {
                                                     <span className="sr-only">Show lesson</span>
                                                 </button>
                                             </div>
-                                        );
+                                        )
                                 }
                             })()}
                             <TileTooltip
@@ -430,6 +461,8 @@ const getTopBarColors = (
 // MAIN COMPONENT
 const RoadMap: NextPage = () => {
     const [scrollY, setScrollY] = useState(0);
+    const [isVisible, setIsVisible] = useState(true);
+
     useEffect(() => {
         const updateScrollY = () => setScrollY(globalThis.scrollY ?? scrollY);
         updateScrollY();
@@ -437,34 +470,63 @@ const RoadMap: NextPage = () => {
         return () => document.removeEventListener("scroll", updateScrollY);
     }, [scrollY]);
 
+    const state = useBoundStore((x: { state: any; }) => x.state);
+
     return (
         <>  
-        <div className="mx-6">
-            <div className="text-white mt-6 font-bold flex">
-                <ArrowLeftSvg/>
-                <span className='mt-1 ml-2'>Back to Jobs</span>
-            </div>
-        
-            <div className='grid grid-cols-6 gap-1 w-full bg-white rounded-2xl text-global-primary-black p-3 flex items-center mt-4 relative'>
-                <div className="col-span-1">
-                    <Image src="/images/techsupport.png" alt="techSupport" width={74} height={76}/>
+            <div className="mx-6">
+                <div className="text-white mt-6 font-bold flex">
+                    <ArrowLeftSvg/>
+                    <span className='mt-1 ml-2'>Back to Jobs</span>
                 </div>
-                <div className='col-span-5 ml-2'>
-                    <div className='font-bold text-lg'>Tech Support Specialist</div>
-                    <div>A technical support specialist combines technical expertise with customer service to advise both customers and employees and troubleshoot their hardware and software issues.</div>
+            
+                <div className='grid grid-cols-6 gap-1 w-full bg-white rounded-2xl text-global-primary-black p-3 flex items-center mt-4 relative'>
+                    <div className="col-span-1">
+                        <Image src="/images/techsupport.png" alt="techSupport" width={74} height={76}/>
+                    </div>
+                    <div className='col-span-5 ml-2'>
+                        <div className='font-bold text-lg'>Tech Support Specialist</div>
+                        <div>A technical support specialist combines technical expertise with customer service to advise both customers and employees and troubleshoot their hardware and software issues.</div>
+                    </div>
+                    <FlowerVectorSvg/>
                 </div>
-                <FlowerVectorSvg/>
             </div>
-        </div>
-            <div className="flex justify-center gap-3 sm:p-6 sm:pt-10 md:ml-24 lg:ml-64 lg:gap-12">
+            {isVisible && (
+            <div className='mx-6 mt-4'>
+                <div className="flex items-center p-5 text-md rounded-lg bg-gray-800 text-white relative z-20" role="alert">
+                    <HeadsUpSvg/>
+                    <div className='ml-3'>
+                        Heads up! Complete the tasks stated at each checkpoint in order to unlock the next checkpoint.
+                    </div>
+                    <div className='relative bottom-4'>
+                        <button onClick={() => {setIsVisible(false)}}>
+                            <CrossSVG/>
+                        </button>
+                    </div>
+                </div>
+            </div> 
+        )}
+
+        {state ? (
+            <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64 lg:gap-12">
                 <div className="flex max-w-2xl grow flex-col">
                     {units.map((unit) => (
                         <UnitSection unit={unit} key={unit.unitNumber} />
                     ))}
                 </div>
-            </div>
-
-            <div className="pt-[130px]"></div>
+            </div> ) : (
+                <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64 lg:gap-12 mb-[300px]">
+                <div className="flex max-w-2xl grow flex-col">
+                    {units.map((unit) => (
+                        <UnitSection unit={unit} key={unit.unitNumber} />
+                    ))}
+                </div>
+                </div>
+            )}
+            
+            {state && (
+                <FinalTab toDisplay={true} /> 
+            )}
         </>
     );
 };

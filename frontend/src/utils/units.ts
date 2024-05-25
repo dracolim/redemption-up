@@ -38,7 +38,7 @@ export const units: readonly Unit[] = [
             { type: "book", description: "A date" ,videoSrc: 'https://www.youtube.com/embed/1X7fZoDs9KU' },
             { type: "trophy", description: "Let's explore some courses", videoSrc: 'https://www.youtube.com/embed/1X7fZoDs9KU', showTab: true },
         ],
-    },
+    }
     // {
     //     unitNumber: 2,
     //     description: "Get around in a city",
