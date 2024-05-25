@@ -4,7 +4,7 @@ import "./globals.css";
 import { AppProvider } from "./Context/store";
 import Navbar from "@/components/Navbar";
 import Chatbot from "@/feature/Chatbot/components/Chatbot";
-
+import { Providers } from "@/lib/providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,18 +17,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <AppProvider>
-          <div className="main">
-            {children}
-            <div className="fixed bottom-[105px] right-8 z-50">
-              <Chatbot />
+    <Providers>
+      <html lang="en">
+        <body className={inter.className}>
+          <AppProvider>
+            <div className="main">
+              {children}
+              <div className="fixed bottom-[105px] right-8 z-50">
+                <Chatbot />
+              </div>
+              <Navbar />
             </div>
-            <Navbar />
-          </div>
-        </AppProvider>
-      </body>
-    </html>
+          </AppProvider>
+        </body>
+      </html>
+    </Providers>
   );
 }
