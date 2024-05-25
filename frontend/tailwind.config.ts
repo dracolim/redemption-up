@@ -26,6 +26,8 @@ const config = {
         "cardbg": "#292939",
         "website-red": "#EA193F",
         "ontrack-green": "#15D283",
+        "course-difficulty-bg": "#D0FCFF",
+        "course-difficulty-font": "#0076FF",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -81,7 +83,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require('@tailwindcss/line-clamp')],
 } satisfies Config
 
 export default config

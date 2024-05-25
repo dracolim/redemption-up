@@ -15,6 +15,8 @@ export default function Home() {
   const [selectedWindow, setSelectedWindow] = useState("Monthly")
   const [projectedIncome, setProjectedIncome] = useState(4000)
   const [retirementGoal, setRetirementGoal] = useState(12300)
+  const [defensibilityScore, setDefensibilityScore] = useState(90)
+  const [scoreColor, setScoreColor] = useState("")
 
   const monthlyProjectIncome = 4000
   const monthlyRetirementGoal = 4800
@@ -33,6 +35,18 @@ export default function Home() {
       setRetirementGoal(monthlyRetirementGoal * 12)
     }
   }, [selectedWindow])
+
+  useEffect(() => {
+    if (defensibilityScore >= 0 && defensibilityScore <= 33 ) {
+      setScoreColor('#FF0000')
+    }
+    if (defensibilityScore > 33 && defensibilityScore <= 66 ) {
+      setScoreColor('#FFFF00')
+    }
+    if (defensibilityScore >= 67 && defensibilityScore <= 100 ) {
+      setScoreColor('#00FF00')
+    }
+  }, [defensibilityScore])
 
   return (
     <div className="">
@@ -75,25 +89,27 @@ export default function Home() {
                   <div>Projected Retirement Income</div> 
                   <IoMdInformationCircleOutline className="absolute top-3 right-3"/>
               </div>
-              <div className="text-xl">${projectedIncome}</div>
+              <div className="text-lg">${projectedIncome}</div>
             </div>
             <div className="h-1/2 flex flex-col justify-center items-center bg-cardbg w-full rounded-3xl px-7 py-2 relative">
               <div className="font-bold mb-1 text-center text-sm">
                 Retirement Income Goal <IoMdInformationCircleOutline className="absolute top-3 right-3"/>
               </div>
-              <div className="text-xl text-center">${retirementGoal}</div>
+              <div className="text-lg text-center">${retirementGoal} at age 65</div>
             </div>
           </div>
         </div>
         <div className="w-1/2 flex justify-end ml-1">
           <div className="w-full flex flex-col justify-center items-center bg-cardbg rounded-3xl p-4 relative">
-            <div className="font-bold text-center mb-2">
+            <div className="font-bold text-center mb-2 text-sm">
               Defensibility Score
               <IoMdInformationCircleOutline className="absolute top-3 right-3"/>
             </div>
-            <CircularProgressbarWithChildren value={56} styles={buildStyles({pathColor: '#EA193F'})} strokeWidth={15} counterClockwise={true}>
-              <div className="font-bold text-3xl">56</div>
-            </CircularProgressbarWithChildren>
+            <div style={{width: 150, height: 150}}>
+              <CircularProgressbarWithChildren value={defensibilityScore} styles={buildStyles({pathColor: scoreColor})} strokeWidth={12} counterClockwise={true}>
+                <div className="font-bold text-3xl">{defensibilityScore}</div>
+              </CircularProgressbarWithChildren>
+            </div>
           </div>
         </div>
       </div>
