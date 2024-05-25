@@ -1,0 +1,23 @@
+[
+    {
+        "title": "CPF 101: Retirement Planning",
+        "svg-url": "/images/cpf-logo.png",
+        "sector": "CPF",
+        "redirect-link": "",
+        "description": "CPF 101: Retirement Planning is a comprehensive guide designed to help individuals understand and navigate the Central Provident Fund (CPF) system in Singapore for effective retirement planning. It covers the basics of CPF contributions, how funds are allocated to different accounts (Ordinary, Special, and Medisave), and the various schemes available for retirement, healthcare, and housing. The guide also provides insights on how to maximize CPF savings, plan for long-term financial security, and make informed decisions about withdrawals and investments. CPF 101 aims to equip individuals with the knowledge and tools needed to build a robust retirement plan using their CPF savings."
+    },
+    {
+        "title": "CPF 201: Retirement Sum",
+        "svg-url": "/images/cpf-logo.png",
+        "sector": "CPF",
+        "redirect-link": "",
+        "description": "CPF 201: Retirement Sum is an advanced guide focused on understanding and managing the Retirement Sum within Singapore's Central Provident Fund (CPF) system. It explains the different Retirement Sum options available—Basic Retirement Sum (BRS), Full Retirement Sum (FRS), and Enhanced Retirement Sum (ERS)—and how each option affects monthly payouts during retirement. The guide covers how to choose the appropriate Retirement Sum based on individual financial goals, the benefits of topping up the CPF accounts, and strategies for optimizing retirement savings. CPF 201 aims to help individuals make informed decisions to ensure a stable and sufficient income during their retirement years."
+    },
+    {
+        "title": "CPF 202: Supplementary Retirement Scheme (SRS)",
+        "svg-url": "/images/cpf-logo.png",
+        "sector": "CPF",
+        "redirect-link": "",
+        "description": "CPF 202: Supplementary Retirement Scheme (SRS) is a detailed guide that delves into the Supplementary Retirement Scheme, a voluntary savings program in Singapore designed to complement the Central Provident Fund (CPF). The guide explains the benefits of the SRS, including tax advantages, flexible contributions, and investment opportunities. It covers how to open an SRS account, the rules for contributions and withdrawals, and strategies for maximizing the scheme's benefits. CPF 202 provides practical advice on integrating SRS into a comprehensive retirement plan to enhance financial security and achieve retirement goals."
+    }
+]
