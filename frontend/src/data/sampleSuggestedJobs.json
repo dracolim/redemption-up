@@ -1,0 +1,23 @@
+[
+    {
+        "title": "UX Designer",
+        "svg-url": "/images/UX-logo.svg",
+        "sector": ["Technology", "Design"],
+        "redirect-link": "",
+        "description": "A UI/UX designer is a professional responsible for crafting the user interface (UI) and user experience (UX) of digital products, such as websites and mobile applications. They focus on making the product visually appealing, intuitive, and user-friendly. UI/UX designers conduct research to understand user needs, create wireframes and prototypes, design interactive elements, and ensure the final product provides a seamless and enjoyable experience. Their goal is to enhance user satisfaction by improving the usability, accessibility, and overall interaction between the user and the product."
+    },
+    {
+        "title": "Product Manager",
+        "svg-url": "/images/PM-logo.svg",
+        "sector": ["Technology", "Sales"],
+        "redirect-link": "",
+        "description": "A Product Manager is a professional responsible for guiding the development and lifecycle of a product from conception to launch and beyond. They act as the bridge between various teams, such as engineering, design, marketing, and sales, ensuring that the product aligns with the company's goals and meets customer needs. Product Managers define the product vision, strategy, and roadmap, gather and prioritize requirements, and make key decisions to drive product success. Their goal is to deliver a product that provides value to users while achieving business objectives."
+    },
+    {
+        "title": "Full Stack Developer",
+        "svg-url": "/images/dev-logo.svg",
+        "sector": ["Technology"],
+        "redirect-link": "",
+        "description": "A Full Stack Developer is a versatile programmer proficient in both front-end and back-end development of web applications. They have the skills to handle all aspects of a project, from designing and building user interfaces (UI) to managing databases and server-side logic. Full Stack Developers work with various technologies, frameworks, and programming languages to create seamless and efficient applications. Their comprehensive knowledge enables them to oversee the entire development process, ensuring the integration of different components to deliver a cohesive and functional product."
+    }
+]
