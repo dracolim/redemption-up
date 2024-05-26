@@ -155,7 +155,7 @@ export default function Chatbot() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <h2 className="text-white text-bold text-[18px] max-w-[230px] text-center" >
+          <h2 className="text-white text-bold text-[18px] max-w-[210px] text-center" >
             {renderHeading()}
           </h2>
           <div className="absolute right-8 top-8">
