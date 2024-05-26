@@ -31,10 +31,9 @@ import {
 } from "@/components/Svgs";
 import { useBoundStore } from '@/hooks/useBoundStore';
 import { useRouter } from 'next/navigation';
-import type { Tile, TileType, Unit } from "@/utils/units";
-import { units } from '@/utils/units';
+import type { Tile, TileType, Unit } from "@/utils/unitsFinance";
+import { units } from '@/utils/unitsFinance';
 import Image from 'next/image';
-import FinalTab from './finalTab';
 
 type TileStatus = "LOCKED" | "ACTIVE" | "COMPLETE";
 
@@ -528,7 +527,6 @@ const RoadMap: NextPage = () => {
                     ))}
                 </div>
             </div> 
-            <FinalTab toDisplay={true} /> 
             </div>
             ) : (
                 <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64 lg:gap-12 mb-[320px]">

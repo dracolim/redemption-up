@@ -52,7 +52,7 @@ export default function Home() {
       <div className="w-full flex justify-end px-5 py-4 items-center">
         <div className="p-2 flex items-center">
           <CgProfile/>
-          <div className="mx-2">Shanice Koh</div>
+          <div className="mx-2">Jane Koh</div>
           <IoIosArrowDown/>
         </div>
       </div>
