@@ -8,6 +8,7 @@ import { Providers } from "@/lib/providers";
 const poppins = Poppins({ subsets: ["latin"], weight:['400','300','600','700'] });
 import MinimumScreen from "@/app/minimumScreen/page";
 import SizeChecker from "./minimumScreen/SizeChecker";
+import Intro from "@/components/Intro";
 
 export const metadata: Metadata = {
   title: "Create Next App",

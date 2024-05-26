@@ -3,7 +3,7 @@ import React from "react";
 
 const ChatHeader = () => {
   return (
-    <div className="bg-white rounded-full h-[75px] w-[75px] flex items-center justify-center">
+    <div className="bg-white rounded-full h-[55px] w-[55px] flex items-center justify-center border-black border-[2px]">
       <ChatbotIcon />
     </div>
   );
