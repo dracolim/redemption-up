@@ -20,8 +20,8 @@ const FinalTab = (toDisplay:boolean) => {
     const ref2 = useRef(null);
 
     return (
-    <div>
-        <Accordion type="single" collapsible className="w-full bg-white rounded-t-2xl px-4 mb-[75px]">
+    <>
+        <Accordion type="single" collapsible className="w-full bg-white rounded-t-2xl px-4 text-black">
             <AccordionItem value="item-1" onClick={() => {
                 setTimeout(() => {
                     setTimeout(() => {
@@ -76,8 +76,7 @@ const FinalTab = (toDisplay:boolean) => {
                 </AccordionContent>
             </AccordionItem>
         </Accordion>
-
-    </div>
+    </>
 );
 }
 

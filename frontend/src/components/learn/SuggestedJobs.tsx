@@ -13,7 +13,7 @@ import Link from 'next/link';
 const SuggestedJobs = () => {
     const [selectedSector, setSelectedSector] = useState("Tech")
   return (
-    <div className='px-5 z-0'>
+    <div className='px-6 z-0'>
         <div className='pb-4'>
             <div className='flex items-center w-full'>
                 <div className='font-semibold text-3xl mr-3'>Sectors</div>
@@ -69,7 +69,7 @@ const SuggestedJobs = () => {
                             height={300}
                             className="absolute inset-0 z-0 object-cover top-8"
                         />
-                        <CardContent className="absolute p-4 flex flex-col justify-between h-full z-10">
+                        <CardContent className="absolute p-4 flex flex-col justify-between h-full z-0">
                             <div className='flex items-center'>
                                 <Image src={job['svg-url']} alt='UX' width={35} height={35}/>
                                 <div className="font-semibold ml-5">{job.title}</div>

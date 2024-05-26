@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 const FinanceResults = () => {
   return (
-    <div className='px-5 pb-4 z-0'>
+    <div className='px-6 pb-4 z-0'>
             <div className='flex items-center w-full'>
                 <div className='font-semibold text-3xl mr-3'>Results</div>
                 <div className="flex-grow border-b border-gray-700"></div>
