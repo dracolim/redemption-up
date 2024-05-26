@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { IoHeartCircle } from "react-icons/io5";
 import { PiArrowCircleDownRightFill } from "react-icons/pi";
 import sampleSuggestedJobs from "../../data/sampleSuggestedJobs.json"
+import Link from 'next/link';
 
 const SuggestedJobs = () => {
     const [selectedSector, setSelectedSector] = useState("Tech")
@@ -46,6 +47,7 @@ const SuggestedJobs = () => {
                 <div className='font-semibold text-3xl mr-3'>Suggested Jobs</div>
                 <div className="flex-grow border-b border-gray-700"></div>
             </div>
+            <div className="mb-2">Based on your defensibility score</div>
             <div className='mt-2'>
                 <div className='flex'>
                     <div className="flex items-center justify-between bg-white p-4 rounded-full h-10 flex-grow">
@@ -67,7 +69,7 @@ const SuggestedJobs = () => {
                             height={300}
                             className="absolute inset-0 z-0 object-cover top-8"
                         />
-                        <CardContent className="p-4 flex flex-col justify-between h-full z-10">
+                        <CardContent className="absolute p-4 flex flex-col justify-between h-full z-10">
                             <div className='flex items-center'>
                                 <Image src={job['svg-url']} alt='UX' width={35} height={35}/>
                                 <div className="font-semibold ml-5">{job.title}</div>
@@ -83,9 +85,9 @@ const SuggestedJobs = () => {
                                 </div>
                                 <div className="flex items-center">
                                     <IoHeartCircle size={30}/>
-                                    <a href="">
+                                    <Link href={job['redirect-link']}>
                                         <PiArrowCircleDownRightFill size={30}/>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </CardContent>

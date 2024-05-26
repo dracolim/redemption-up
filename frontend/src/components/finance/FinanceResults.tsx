@@ -49,7 +49,7 @@ const FinanceResults = () => {
                             <div className="flex items-center justify-end">
                                 <div className="flex items-center">
                                     <IoHeartCircle size={35}/>
-                                    <Link href={`/finance/${plan.id}`}>
+                                    <Link href={`/roadmapFinance/${plan.id}`}>
                                         <PiArrowCircleDownRightFill size={35}/>
                                     </Link>
                                 </div>

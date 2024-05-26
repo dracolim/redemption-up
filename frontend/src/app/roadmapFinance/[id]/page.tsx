@@ -31,19 +31,19 @@ import {
 } from "@/components/Svgs";
 import { useBoundStore } from '@/hooks/useBoundStore';
 import { useRouter } from 'next/navigation';
-import type { Tile, TileType, Unit } from "@/utils/units";
-import { units } from '@/utils/units';
+import type { Tile, TileType, Unit } from "@/utils/unitsFinance";
+import { units } from '@/utils/unitsFinance';
 import Image from 'next/image';
-import FinalTab from './finalTab';
+import { useNavigate } from "react-router-dom";
 
 type TileStatus = "LOCKED" | "ACTIVE" | "COMPLETE";
 
 // LOGIC IS HERE!!!!!
-const tileStatus = (tile: Tile, lessonsCompleted: number): TileStatus => {
+const tileStatus = (tile: Tile, lessonsCompleted: number, targetUnit: Unit): TileStatus => {
     const lessonsPerTile = 1;
     const tilesCompleted = Math.floor(lessonsCompleted / lessonsPerTile);
-    const tiles = units.flatMap((unit) => unit.tiles);
-    const tileIndex = tiles.findIndex((t) => t === tile);
+    const tiles = targetUnit?.tiles;
+    const tileIndex = tiles?.findIndex((t) => t === tile);
 
     if (tileIndex < tilesCompleted) {
         return "COMPLETE";
@@ -188,6 +188,7 @@ const TileTooltip = ({
     status,
     closeTooltip,
     subDescription,
+    subsequentLink
 }: {
     selectedTile: number | null;
     index: number;
@@ -195,7 +196,8 @@ const TileTooltip = ({
     tilesLength: number;
     description: string;
     status: TileStatus;
-    subDescription?: string;
+    subDescription?: string[];
+    subsequentLink?: string;
     closeTooltip: () => void;
 }) => {
     const tileTooltipRef = useRef<HTMLDivElement | null>(null);
@@ -218,7 +220,6 @@ const TileTooltip = ({
     const activeBackgroundColor = unit?.backgroundColor ?? "bg-green-500";
     const increaseLessonsCompleted = useBoundStore((x: { increaseLessonsCompleted: any; }) => x.increaseLessonsCompleted);
     const { state, updateState } = useBoundStore();
-
 
     return (
         <div
@@ -275,7 +276,15 @@ const TileTooltip = ({
                                 : "text-yellow-600",
                     ].join(" ")}
                 >
-                    {subDescription}
+                         {subDescription.length > 1 ? (
+                            <ul>
+                            {subDescription.map((item, index) => (
+                                <li key={index} className='list-disc ml-3'>{item}</li>
+                            ))}
+                            </ul>
+                        ) : (
+                            <div>{subDescription[0]}</div>
+                        )}
                 </div>)}
                 {status === "ACTIVE" ? (
                     <div>
@@ -287,7 +296,15 @@ const TileTooltip = ({
                                 title='video'
                             />
                         )}
-                            { unit?.tiles[index].type === "trophy" ? (
+                        {unit?.tiles[index].subsequentLink && ( 
+                            <button className="w-full rounded-xl bg-white p-3 uppercase text-black mt-3">
+                                 <Link href={unit?.tiles[index].subsequentLink} >
+                                Learn More
+                            </Link>
+                            </button>
+                           
+                        )}
+                        { unit?.tiles[index].type === "trophy" ? (
                                 <button
                                     className="w-full rounded-xl bg-white p-3 uppercase text-black mt-3" 
                                     onClick={()=>{
@@ -354,7 +371,7 @@ const UnitSection = ({ unit }: { unit: Unit }): JSX.Element => {
         <>
             <div className="relative mb-8 mt-[67px] flex max-w-2xl flex-col items-center gap-4">
                 {unit.tiles.map((tile, i): JSX.Element => {
-                    const status = tileStatus(tile, lessonsCompleted);
+                    const status = tileStatus(tile, lessonsCompleted, unit);
                     return (
                         <Fragment key={i}>
                             {(() => {
@@ -454,8 +471,18 @@ const UnitSection = ({ unit }: { unit: Unit }): JSX.Element => {
     );
 };
 
+
 // MAIN COMPONENT
-const RoadMap: NextPage = () => {
+
+interface Params {
+    id: string;
+  }
+
+
+const RoadMapFinance: NextPage<{ params: Params }> = ({ params }) => {
+
+    const targetUnit = units.find(unit => unit.unitNumber === parseInt(params.id))
+
     const [scrollY, setScrollY] = useState(0);
     const [isVisible, setIsVisible] = useState(true);
     const [isVisibleSuccess, setIsVisibleSuccess] = useState(true);
@@ -472,20 +499,22 @@ const RoadMap: NextPage = () => {
     return (
         <>  
             <div className="mx-6">
-                <Link href="/" className="text-white mt-6 font-bold flex">
+                <Link href="/learn" className="text-white mt-6 font-bold flex">
                     <ArrowLeftSvg/>
                     <span className='mt-1 ml-2'>Back to Jobs</span>
                 </Link>
             
                 <div className='grid grid-cols-6 gap-1 w-full bg-white rounded-2xl text-global-primary-black p-3 flex items-center mt-4 relative'>
                     <div className="col-span-1">
-                        <Image src="/images/techsupport.png" alt="techSupport" width={74} height={76}/>
+                        <Image src={targetUnit?.imgUrl} alt="workimg" width={74} height={76}/>
                     </div>
                     <div className='col-span-5 ml-2'>
-                        <div className='font-bold text-lg'>Tech Support Specialist</div>
-                        <div>A technical support specialist combines technical expertise with customer service to advise both customers and employees and troubleshoot their hardware and software issues.</div>
+                        <div className='font-bold text-lg'>{targetUnit?.Title}</div>
+                        <div>{targetUnit?.courseDescription}</div>
                     </div>
-                    <FlowerVectorSvg/>
+                    <div className='z-0'>
+                        <FlowerVectorSvg/>
+                    </div>
                 </div>
             </div>
             {isVisible && (
@@ -508,7 +537,7 @@ const RoadMap: NextPage = () => {
                     <div className="flex items-center p-5 text-md rounded-lg bg-green-500 text-white relative z-20" role="alert">
                         <HeadsUpSvg/>
                         <div className='ml-3'>
-                            Congratulations on finishing the Tech Support Specialist roadmap. You can now access the free resources and certificates available down below.
+                            Congratulations on finishing the {targetUnit?.jobTitle} roadmap. You can now access the free resources and certificates available down below.
                         </div>
                         <div className='relative bottom-4'>
                             <button onClick={() => {setIsVisibleSuccess(false)}}>
@@ -523,19 +552,14 @@ const RoadMap: NextPage = () => {
             <div>
                 <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64 lg:gap-12">
                 <div className="flex max-w-2xl grow flex-col">
-                    {units.map((unit) => (
-                        <UnitSection unit={unit} key={unit.unitNumber} />
-                    ))}
+                    <UnitSection unit={targetUnit} key={targetUnit?.unitNumber} />
                 </div>
             </div> 
-            <FinalTab toDisplay={true} /> 
             </div>
             ) : (
                 <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64 lg:gap-12 mb-[320px]">
                 <div className="flex max-w-2xl grow flex-col">
-                    {units.map((unit) => (
-                        <UnitSection unit={unit} key={unit.unitNumber} />
-                    ))}
+                    <UnitSection unit={targetUnit} key={targetUnit?.unitNumber} />
                 </div>
                 </div>
             )}
@@ -543,7 +567,7 @@ const RoadMap: NextPage = () => {
     );
 };
 
-export default RoadMap;
+export default RoadMapFinance;
 
 const LessonCompletionSvg = ({
     lessonsCompleted,
