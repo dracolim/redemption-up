@@ -210,8 +210,10 @@ const TileTooltip = ({
             closeTooltip();
         };
 
-        window.addEventListener("click", containsTileTooltip, true);
-        return () => window.removeEventListener("click", containsTileTooltip, true);
+        if (window !== undefined) {
+            window.addEventListener("click", containsTileTooltip, true);
+            return () => window.removeEventListener("click", containsTileTooltip, true);
+        }
     }, [selectedTile, tileTooltipRef, closeTooltip, index]);
 
     const unit = units.find((unit) => unit.unitNumber === unitNumber);
@@ -341,9 +343,11 @@ const UnitSection = ({ unit }: { unit: Unit }): JSX.Element => {
     const [selectedTile, setSelectedTile] = useState<null | number>(null);
 
     useEffect(() => {
-        const unselectTile = () => setSelectedTile(null);
-        window.addEventListener("scroll", unselectTile);
-        return () => window.removeEventListener("scroll", unselectTile);
+        if (window !== undefined) {
+            const unselectTile = () => setSelectedTile(null);
+            window.addEventListener("scroll", unselectTile);
+            return () => window.removeEventListener("scroll", unselectTile);
+        }
     }, []);
 
     const closeTooltip = useCallback(() => setSelectedTile(null), []);

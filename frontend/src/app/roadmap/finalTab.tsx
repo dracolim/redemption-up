@@ -25,7 +25,9 @@ const FinalTab = (toDisplay:boolean) => {
             <AccordionItem value="item-1" onClick={() => {
                 setTimeout(() => {
                     setTimeout(() => {
-                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                        if (window !== undefined) {
+                            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                        }
                     }, 100);
                     
                 }, 100);
@@ -53,7 +55,9 @@ const FinalTab = (toDisplay:boolean) => {
             <AccordionItem value="item-2" onClick={() => {
                 setTimeout(() => {
                     setTimeout(() => {
-                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                        if (window !== undefined) {
+                            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                        }
                     }, 100);
                     
                 }, 100);

@@ -7,19 +7,23 @@ const SizeChecker = ({ children }: { children: React.ReactNode }) => {
   const [isWindowSizeValid, setIsWindowSizeValid] = useState(true);
 
   const checkWindowSize = () => {
-    if (window.innerWidth > 500) { // Change 1200 to your desired width threshold
-      setIsWindowSizeValid(false);
-    } else {
-      setIsWindowSizeValid(true);
+    if (window !== undefined) {
+      if (window.innerWidth > 500) { // Change 1200 to your desired width threshold
+        setIsWindowSizeValid(false);
+      } else {
+        setIsWindowSizeValid(true);
+      }
     }
   };
 
   useEffect(() => {
-    checkWindowSize();
-    window.addEventListener('resize', checkWindowSize);
-    return () => {
-      window.removeEventListener('resize', checkWindowSize);
-    };
+    if (window !== undefined) {
+      checkWindowSize();
+      window.addEventListener('resize', checkWindowSize);
+      return () => {
+        window.removeEventListener('resize', checkWindowSize);
+      };
+    }
   }, []);
 
   if (!isWindowSizeValid) {

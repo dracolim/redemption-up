@@ -212,8 +212,11 @@ const TileTooltip = ({
             closeTooltip();
         };
 
-        window.addEventListener("click", containsTileTooltip, true);
-        return () => window.removeEventListener("click", containsTileTooltip, true);
+        if (window !== undefined) {
+            window.addEventListener("click", containsTileTooltip, true);
+            return () => window.removeEventListener("click", containsTileTooltip, true);
+        }
+
     }, [selectedTile, tileTooltipRef, closeTooltip, index]);
 
     const unit = units.find((unit) => unit.unitNumber === unitNumber);
@@ -358,9 +361,11 @@ const UnitSection = ({ unit }: { unit: Unit }): JSX.Element => {
     const [selectedTile, setSelectedTile] = useState<null | number>(null);
 
     useEffect(() => {
-        const unselectTile = () => setSelectedTile(null);
-        window.addEventListener("scroll", unselectTile);
-        return () => window.removeEventListener("scroll", unselectTile);
+        if (window !== undefined) {
+            const unselectTile = () => setSelectedTile(null);
+            window.addEventListener("scroll", unselectTile);
+            return () => window.removeEventListener("scroll", unselectTile);
+        }
     }, []);
 
     const closeTooltip = useCallback(() => setSelectedTile(null), []);
@@ -499,9 +504,9 @@ const RoadMapFinance: NextPage<{ params: Params }> = ({ params }) => {
     return (
         <>  
             <div className="mx-6">
-                <Link href="/learn" className="text-white mt-6 font-bold flex">
+                <Link href="/finance" className="text-white mt-6 font-bold flex">
                     <ArrowLeftSvg/>
-                    <span className='mt-1 ml-2'>Back to Jobs</span>
+                    <span className='mt-1 ml-2'>Back to Finance</span>
                 </Link>
             
                 <div className='grid grid-cols-6 gap-1 w-full bg-white rounded-2xl text-global-primary-black p-3 flex items-center mt-4 relative'>

@@ -6,7 +6,9 @@ const AudioRecorder = ({ onStopRecording }) => {
   const recognitionRef = useRef(null);
 
   const startRecording = () => {
-    recognitionRef.current = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    if (window !== undefined) {
+      recognitionRef.current = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    }
     recognitionRef.current.continuous = true;
     recognitionRef.current.interimResults = false;
 
