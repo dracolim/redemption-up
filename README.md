@@ -1,6 +1,12 @@
 # redemption-arc
 AngelHack 2024 Prehack
 
+**Deployed Links**:
+
+Frontend: https://redemption-up.vercel.app
+
+Backend: https://redemption-up.onrender.com
+
 # Tech Stack
 
 ### Frontend
