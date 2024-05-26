@@ -4,11 +4,12 @@ import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { IoMdInformationCircleOutline } from "react-icons/io";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import GoalProgressTracker from "@/components/homepage/GoalProgressTracker";
 import RecommendSection from "@/components/homepage/RecommendSection";
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import Intro from "@/components/Intro";
 
 export default function Home() {
   const [selectedWindow, setSelectedWindow] = useState("Monthly")
@@ -16,9 +17,14 @@ export default function Home() {
   const [retirementGoal, setRetirementGoal] = useState(12300)
   const [defensibilityScore, setDefensibilityScore] = useState(90)
   const [scoreColor, setScoreColor] = useState("")
+  const [open, setOpen] = useState(false)
 
   const monthlyProjectIncome = 4000
   const monthlyRetirementGoal = 4800
+
+  useEffect(() => {
+    setOpen(true)
+  }, [])
 
   useEffect(() => {
     if (selectedWindow == "Monthly") {
@@ -49,6 +55,7 @@ export default function Home() {
 
   return (
     <div className="">
+      <Intro open={open} setOpen={setOpen}/>
       <div className="w-full flex justify-end px-5 py-4 items-center">
         <div className="p-2 flex items-center">
           <CgProfile/>
