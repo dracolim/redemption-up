@@ -1,10 +1,10 @@
 [
     {
       "id": "1",
-      "title": "CPF 101: Introduction to Retirement Planning",
+      "title": "What is Retirement Sum?",
       "svg-url": "/images/cpf-logo.png",
       "sector": "CPF",
-      "video-link": "https://www.youtube.com/embed/hfkddlruvmE",
+      "video-link": "https://www.youtube.com/embed/5vfb4bc5ZJA",
       "redirect-link": "https://www.cpf.gov.sg/member/retirement-income/about-cpf-planner-retirement-income",
       "brief": "An introductory guide to understanding and utilizing Singapore's CPF system for effective retirement planning, covering contributions, account allocations, and maximizing savings.",
       "description": "CPF 101: Retirement Planning is a comprehensive guide designed to help individuals understand and navigate the Central Provident Fund (CPF) system in Singapore for effective retirement planning. It covers the basics of CPF contributions, how funds are allocated to different accounts (Ordinary, Special, and Medisave), and the various schemes available for retirement, healthcare, and housing. The guide also provides insights on how to maximize CPF savings, plan for long-term financial security, and make informed decisions about withdrawals and investments. CPF 101 aims to equip individuals with the knowledge and tools needed to build a robust retirement plan using their CPF savings.",
@@ -12,10 +12,10 @@
     },
     {
       "id": "2",
-      "title": "CPF 201: CPF Life & Retirement Sum Options",
+      "title": "What is CPF LIFE?",
       "svg-url": "/images/cpf-logo.png",
       "sector": "CPF",
-      "video-link": "https://www.youtube.com/embed/1icJSnkclY4",
+      "video-link": "https://www.youtube.com/embed/81dMbcUwm34?si=dGy9x1DdUkd7NNhy",
       "redirect-link": "https://www.cpf.gov.sg/member/infohub/educational-resources/what-is-the-cpf-retirement-sum",
       "brief": "An introductory guide on CPF LIFE and Retirement Sum options (BRS, FRS, ERS) to ensure adequate monthly payouts during retirement, with strategies for optimizing savings.",
       "description": "CPF 201: Retirement Sum is an advanced guide focused on understanding and managing the Retirement Sum within Singapore's Central Provident Fund (CPF) system. It explains the different Retirement Sum options available—Basic Retirement Sum (BRS), Full Retirement Sum (FRS), and Enhanced Retirement Sum (ERS)—and how each option affects monthly payouts during retirement. The guide covers how to choose the appropriate Retirement Sum based on individual financial goals, the benefits of topping up the CPF accounts, and strategies for optimizing retirement savings. CPF 201 aims to help individuals make informed decisions to ensure a stable and sufficient income during their retirement years.",
@@ -23,10 +23,10 @@
     },
     {
       "id": "3",
-      "title": "CPF 202: Supplementary Retirement Scheme (SRS)",
+      "title": "Types of Retirement Sum",
       "svg-url": "/images/cpf-logo.png",
       "sector": "CPF",
-      "video-link": "https://www.youtube.com/embed/cEncJsupbeA",
+      "video-link": "https://www.youtube.com/embed/1icJSnkclY4?si=OoGqvMKLS11IWV_z",
       "redirect-link": "",
       "brief": "A concise guide on the SRS, detailing its benefits, tax advantages, and strategies for enhancing retirement savings through voluntary contributions and investments.",
         "description": "CPF 202: Supplementary Retirement Scheme (SRS) is a detailed guide that delves into the Supplementary Retirement Scheme, a voluntary savings program in Singapore designed to complement the Central Provident Fund (CPF). The guide explains the benefits of the SRS, including tax advantages, flexible contributions, and investment opportunities. It covers how to open an SRS account, the rules for contributions and withdrawals, and strategies for maximizing the scheme's benefits. CPF 202 provides practical advice on integrating SRS into a comprehensive retirement plan to enhance financial security and achieve retirement goals."
