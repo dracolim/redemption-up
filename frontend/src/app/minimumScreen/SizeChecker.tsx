@@ -26,9 +26,9 @@ const SizeChecker = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className='h-screen flex justify-center items-center flex-col'>
             <div className="flex justify-center items-center">
-                <Image src = "/images/error-404.svg" alt = "404 Error" width = "250" height = "50"/>
+                <Image src = "/images/error-404.svg" alt = "404 Error" width = "500" height = "80"/>
             </div>
-            <div className='text-center'>
+            <div className='text-center text-xl'>
                 This site is optimised for browsers lesser than 500px only.
             </div>
         </div>
