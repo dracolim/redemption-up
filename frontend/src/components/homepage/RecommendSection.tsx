@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { BsArrowDownRightCircleFill } from "react-icons/bs";
 import { useState } from 'react';
 import { BsArrowRightCircleFill } from "react-icons/bs";
+import Link from 'next/link';
 
 type ModalProps = {
     cause: string,
@@ -18,6 +19,7 @@ const RecommendSection = () => {
     const [cause, setCause] = useState("")
     const [suggestion, setSuggestion] = useState("")
     const [isNewJob, setIsNewJob] = useState(true)
+    const [redirectUrl, setRedirectUrl] = useState("")
 
     const handleModalClick = (event : React.MouseEvent) => {
         event.stopPropagation()
@@ -31,14 +33,14 @@ const RecommendSection = () => {
                     <div className='text-center'>
                         According to your defensibility score, your <span className='underline'>{cause}</span> is/are weak. Hence, we suggest <span className='font-bold'>{suggestion}</span>
                     </div>
-                    <BsArrowRightCircleFill className='self-end' size={25}/>
+                    <Link className='self-end' href={redirectUrl}><BsArrowRightCircleFill size={25}/></Link>
                 </div>
             </div>
         )
     }
 
   return (
-    <div className='flex flex-col justify-start items-center w-full px-5 py-2'>
+    <div className='flex flex-col justify-start items-center w-full px-6 py-2'>
         {togglePopup && <InfoModal/>}
         <div className='flex justify-between w-full items-start mb-2'>
             <div>
@@ -53,6 +55,7 @@ const RecommendSection = () => {
                 setIsNewJob(true)
                 setCause("Job Security")
                 setSuggestion("Job Career Switch")
+                setRedirectUrl("/learn")
             }}
         >
             <Image src="/images/briefcase-black.svg" alt="briefcase" width={50} height={50}/>
@@ -68,6 +71,7 @@ const RecommendSection = () => {
                 setIsNewJob(false)
                 setCause("Insurance")
                 setSuggestion("Boost to Enhanced Retirement Sum (ERS)")
+                setRedirectUrl("/finance")
             }}
         >
             <Image src="/images/security-card-black.svg" alt="security-card" width={50} height={50}/>
@@ -83,6 +87,7 @@ const RecommendSection = () => {
                 setIsNewJob(false)
                 setCause("Investments")
                 setSuggestion("Supplementary Retirement Scheme")
+                setRedirectUrl("/finance")
             }}
         >
             <Image src="/images/security-card-black.svg" alt="security-card" width={50} height={50}/>

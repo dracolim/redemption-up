@@ -503,7 +503,9 @@ const RoadMap: NextPage = () => {
                     </div>
                 </div> 
             )}
+            
             {state && isVisibleSuccess && (
+                <>
                 <div className='mx-6 mt-4'>
                     <div className="flex items-center p-5 text-md rounded-lg bg-green-500 text-white relative z-20" role="alert">
                         <HeadsUpSvg/>
@@ -517,26 +519,26 @@ const RoadMap: NextPage = () => {
                         </div>
                     </div>
                 </div> 
+                <div>
+                    <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64">
+                        <div className="flex max-w-2xl grow flex-col">
+                            {units.map((unit) => (
+                                <UnitSection unit={unit} key={unit.unitNumber} />
+                            ))}
+                        </div>
+                    </div> 
+                    <FinalTab toDisplay={true} /> 
+                </div>
+             </>
             )}
 
-        {state ? (
-            <div>
-                <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64 lg:gap-12">
-                <div className="flex max-w-2xl grow flex-col">
-                    {units.map((unit) => (
-                        <UnitSection unit={unit} key={unit.unitNumber} />
-                    ))}
-                </div>
-            </div> 
-            <FinalTab toDisplay={true} /> 
-            </div>
-            ) : (
-                <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64 lg:gap-12 mb-[320px]">
-                <div className="flex max-w-2xl grow flex-col">
-                    {units.map((unit) => (
-                        <UnitSection unit={unit} key={unit.unitNumber} />
-                    ))}
-                </div>
+            {!state && (
+                <div className="flex justify-center gap-3 sm:p-6 sm:pt-5 md:ml-24 lg:ml-64 mb-[280px]">
+                    <div className="flex max-w-2xl grow flex-col">
+                        {units.map((unit) => (
+                            <UnitSection unit={unit} key={unit.unitNumber} />
+                        ))}
+                    </div>
                 </div>
             )}
         </>

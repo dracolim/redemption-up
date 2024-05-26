@@ -14,12 +14,12 @@ const FinanceTypesCarousel = () => {
     const [selectedFinanceType, setSelectedFinanceType] = useState("CPF")
   return (
     <div className='pb-4'>
-        <div className='flex items-center w-full px-5'>
+        <div className='flex items-center w-full px-6'>
             <div className='font-semibold text-3xl mr-3'>Types</div>
             <div className="flex-grow border-b border-gray-700"></div>
         </div>
         <div className='flex justify-center items-center flex-col'>
-        <div className="px-5 py-2 w-full">
+        <div className="px-6 py-2 w-full">
             <div className="flex justify-center w-full">
                 <Carousel
                     opts={{
