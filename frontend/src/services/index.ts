@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import type { ReduxState } from "@/lib/redux/store";
 
-export const devUrl = "http://localhost:8080";
-export const productionUrl = "https://api.startr.me";
+export const devUrl = "http://127.0.0.1:8080";
+export const productionUrl = "https://redemption-up.onrender.com";
 
 // Used for testing the remote backend
 // export const productionUrl = "http://localhost:8080";
