@@ -21,7 +21,7 @@ const FinalTab = (toDisplay:boolean) => {
 
     return (
     <>
-        <Accordion type="single" collapsible className="w-full bg-white rounded-t-2xl px-4 text-black">
+        <Accordion type="single" collapsible className="w-full bg-white rounded-2xl px-4 text-black">
             <AccordionItem value="item-1" onClick={() => {
                 setTimeout(() => {
                     setTimeout(() => {

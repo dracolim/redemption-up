@@ -25,7 +25,7 @@ export default function RootLayout({
           <AppProvider>
             <SizeChecker>
               <div className="">
-                <div className="min-h-screen mb-20">
+                <div className="min-h-screen mb-24">
                   {children}
                 </div>
                 <div className="fixed bottom-[90px] right-8 z-50">
